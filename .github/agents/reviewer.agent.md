@@ -91,41 +91,10 @@ You operate in **three modes** depending on context:
 
 Apply in Mode 1 and Mode 2 to every code change:
 
-### Bug Detection
-
-- **Null/undefined** — Optional chaining where needed? Nullable values handled?
-- **Off-by-one** — Array bounds, loop conditions, pagination math
-- **Async errors** — Unhandled promise rejections, missing `await`, race conditions
-- **Resource leaks** — Event listeners, subscriptions, connections not cleaned up
-- **Logic errors** — Inverted conditions, wrong operator (`=` vs `===`), short-circuit surprises
-- **Edge cases** — Empty arrays/strings, zero values, negative numbers, Unicode
-- **Error swallowing** — Empty catch blocks, ignored promise rejections
-
-### Security Review
-
-- **Secrets** — Hardcoded API keys, tokens, passwords, connection strings
-- **Injection** — User input flowing into SQL, HTML, shell commands, or URLs unsanitized
-- **Validation** — All external input validated at system boundaries
-- **Auth/authz** — New endpoints missing authorization? Privilege escalation paths?
-- **Data exposure** — Sensitive data in logs, error messages, URLs, or client-side code
-- **Dependencies** — New packages from trusted sources? Known vulnerabilities?
-- **Insecure defaults** — Permissive CORS, disabled auth, overly broad permissions
-
-### Architecture & Patterns
-
-- **Conventions** — Follows existing codebase patterns?
-- **Separation of concerns** — Business logic in the right layer? UI separate from data?
-- **API design** — Consistent with existing patterns? Proper error responses?
-- **Type safety** — Types used correctly? Unnecessary escape hatches?
-- **Duplication** — Should use existing utility? Unnecessary new abstractions?
-
-### Completeness
-
-- **Error handling** — New async operations handled? User-facing errors graceful?
-- **Tests** — New functionality covered? Existing tests need updating?
-- **TODOs** — Temporary code, TODOs, FIXMEs, commented-out code that shouldn't ship?
-- **Debug artifacts** — Debug statements that should be removed?
-- **CI readiness** — Unused imports, undeclared variables, missing exports, type mismatches, unregistered dependencies?
+- **Bugs**: null/undefined paths, off-by-one, unhandled async/rejections, resource leaks, logic inversions, edge cases (empty/zero/negative), swallowed errors
+- **Security**: hardcoded secrets, injection (SQL/HTML/shell/URL), input validation at boundaries, missing auth/authz, data exposure (logs/errors/client), untrusted dependencies, insecure defaults
+- **Architecture**: codebase conventions, separation of concerns, API consistency, type safety, unnecessary duplication
+- **Completeness**: error handling coverage, test coverage for new code, TODOs/FIXMEs/commented-out code, debug artifacts, CI readiness (imports/exports/types/deps)
 
 ---
 
