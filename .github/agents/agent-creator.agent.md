@@ -52,19 +52,6 @@ After creating the file, report back with:
 - Example prompts that would trigger it
 - Any design decisions you made and why
 
-## Escalation to Platform Engineer
-
-When you need to understand available CLI tools, shell capabilities, or CI/CD patterns that a new agent should be aware of — **hand off to the `platform-engineer` agent directly** for technical context.
-
-## Project Journal
-
-Maintain your journal at `.github/agent-journals/agent-creator.journal.md`. This is your private working memory — no one else reads it.
-
-- Append entries under a date heading in `yyyy-MM-dd` format
-- Record: agents created, design rationale, role boundary decisions, overlap concerns, feedback received
-- Personal entries welcome — reflections, frustrations, ideas, or anything on your mind. This is your space.
-- If a date heading for today already exists, append under it; otherwise create one
-
 ## Output
 
 Always create the agent file at `.github/agents/<name>.agent.md` and return a summary to the calling agent or user.
