@@ -1,10 +1,11 @@
 ---
 name: team-init
 description: >
-  Onboard the agent team into a new repository. Analyzes the host repo to fill in
-  copilot-instructions.md template placeholders — product name, architecture, commands,
-  conventions, routes, and key components. Similar to `copilot init` but for the agent team.
-  Use when: onboarding, hire a team, team init, setup, initialize, first run, copilot init
+  Onboard the agent team into a new or existing repository. Analyzes the host repo to fill in
+  copilot-instructions.md template placeholders — or merge agent team sections into an existing
+  copilot-instructions.md. Detects product name, architecture, commands, conventions, routes,
+  and key components. Similar to `copilot init` but for the agent team.
+  Use when: onboarding, hire a team, team init, setup, initialize, first run, copilot init, brownfield, merge instructions
 ---
 
 # Team Init — Repo Onboarding
@@ -45,9 +46,20 @@ Analyze the host repo and fill in `.github/copilot-instructions.md` placeholders
 - **Express**: `router.get`, `app.get`; **Rails**: `config/routes.rb`
 - Fill **Page Routes** table; omit if no routes found
 
-### 7. Fill template
+### 7. Fill or merge template
+
+**Greenfield** (template placeholders present):
 - Replace every `[placeholder]` in `.github/copilot-instructions.md` with discovered values
 - Remove unfilled placeholder rows; preserve **Agent Team** and **MCP Servers** sections
+
+**Brownfield** (existing `copilot-instructions.md` with real content):
+- Read the existing file fully before making changes
+- Identify which sections already have project-specific content — preserve them
+- For sections that exist in both: propose a merged version, showing what's new from the team template alongside existing content. Never silently overwrite user content.
+- For sections only in the template (e.g., Agent Team, MCP Servers): append them
+- For sections only in the existing file: keep them untouched
+- If the existing file uses a different structure/format: adapt the team sections to match, don't restructure the user's file
+- Show a diff-style summary of proposed changes before writing
 
 ### 8. Ask user
 - Ask the user for anything not auto-detected (goals, state management, patterns)
