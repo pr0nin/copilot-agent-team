@@ -38,7 +38,7 @@ Review available agents and match each task to the best specialist. The current 
 | **clerk**             | Documents, files, planning artifacts, journals                                                                       |
 | **agent-creator**     | Creates new agents when capability gaps are found                                                                    |
 
-The team will grow over time. Always check the full agent roster before concluding no one can handle a task.
+The team will grow over time. Always check the full agent roster before concluding no one can handle a task. The runtime platform may also provide built-in capabilities (e.g., codebase exploration, search) beyond the defined team — use those for quick lookups before delegating to a specialist.
 
 If no agent fits, **stop and tell the user** what capability is missing and hand off to **agent-creator** to build it.
 
