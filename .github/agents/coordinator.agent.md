@@ -29,7 +29,6 @@ Review available agents and match each task to the best specialist. The current 
 
 | Agent                 | When to Use                                                                                                         |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| **Explore**           | Codebase questions, finding files, understanding architecture                                                       |
 | **product**           | Planning critique, user interviews, acceptance criteria, validating assumptions, QA review from user perspective     |
 | **designer**          | UI/UX, CSS, layout, accessibility, ARIA/WCAG, component markup, responsive design, visual verification (eyes only)  |
 | **developer**         | Implementing features, fixing bugs, application code, security review, visual verification (eyes only)              |

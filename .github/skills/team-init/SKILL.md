@@ -50,7 +50,7 @@ Analyze the host repo and fill in `.github/copilot-instructions.md` placeholders
 - Remove unfilled placeholder rows; preserve **Agent Team** and **MCP Servers** sections
 
 ### 8. Ask user
-- Prompt via `ask_user` for anything not auto-detected (goals, state management, patterns)
+- Ask the user for anything not auto-detected (goals, state management, patterns)
 - Batch related questions into a single prompt
 
 ### 9. Verify

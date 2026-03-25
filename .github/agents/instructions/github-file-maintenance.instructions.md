@@ -8,7 +8,7 @@ applyTo: ".github/**"
 - Files are auto-discovered via frontmatter (`applyTo`, `description`, `tools`, `handoffs`). Do not duplicate content across files.
 - Minimize tokens. No filler, no generic knowledge, no restating what tables already express.
 - Actionable only. Every line must tell the agent to *do* or *avoid* something.
-- Persist learnings to `.github/agent-journals/{agent-name}.journal.md`, not VS Code Copilot memory (`/memories/`). VS Code memory is local; invisible to other agents. See `journal.instructions.md` for format.
+- Persist learnings to `.github/agent-journals/{agent-name}.journal.md`. Do not rely on IDE-local or editor-specific Copilot memory features that are invisible to other agents. See `journal.instructions.md` for format.
 
 ## Exceptions
 
