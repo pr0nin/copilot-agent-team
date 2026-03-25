@@ -1,6 +1,8 @@
 # Copilot Instructions
 
 > **Minimum viable config**: Fill in Product Context + Commands + one Convention to get started. Everything else is optional.
+>
+> **Quick setup**: Run the `team-init` skill to auto-detect and fill in these placeholders from your repo.
 
 ## Product Context
 

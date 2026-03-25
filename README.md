@@ -13,7 +13,7 @@ A reusable, generic agent team for GitHub Copilot. Drop it into any repo to get 
 ### Option 1: Use as GitHub Template
 
 1. Click **"Use this template"** on GitHub to create a new repo
-2. Edit `.github/copilot-instructions.md` with your project details
+2. Run the **team-init** skill to auto-configure: ask Copilot *"Run team-init to set up the agent team for this repo"*
 3. Delete any skills you don't need from `.github/skills/`
 
 ### Option 2: Copy into an existing repo
@@ -28,13 +28,17 @@ cp ./copilot-agent-team-base/.github/copilot-instructions.md your-repo/.github/c
 
 > **Brownfield warning**: If your repo already has `.github/copilot-instructions.md`, don't blindly overwrite it — merge the Agent Team section manually.
 
+After copying, run the **team-init** skill: *"Run team-init to set up the agent team for this repo"*. It will scan your project and fill in `copilot-instructions.md` automatically — detecting your language, framework, build commands, architecture, and conventions.
+
+> **Manual alternative**: If you prefer, edit `.github/copilot-instructions.md` by hand instead.
+
 ## Verify It Works
 
 Ask the coordinator: *"Introduce the team and explain what each agent does."*
 
 ## Customization
 
-- **Add project context**: Edit `.github/copilot-instructions.md` — the main file agents reference for your project's architecture, commands, and conventions.
+- **Configure for your project**: Run the `team-init` skill — it auto-detects your stack and fills in `copilot-instructions.md`. Or edit it manually.
 - **Add/remove skills**: Skills live in `.github/skills/`. Each skill has a `SKILL.md` with frontmatter and content.
 - **Add domain-specific agents**: Create `.agent.md` files in `.github/agents/`, or ask the agent-creator.
 - **Add stack-specific instructions**: Create instruction files in `.github/agents/instructions/`.
