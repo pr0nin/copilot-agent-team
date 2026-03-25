@@ -1,6 +1,6 @@
 # Optimize copilot-agent-team Repository
 
-You are optimizing `/home/pr0nin/repo/privat/copilot-agent-team` — a reusable multi-agent team template for GitHub Copilot (9 agents, 3 instruction files, 1 prompt workflow, 5 skills, docs).
+You are optimizing `this repository` — a reusable multi-agent team template for GitHub Copilot (9 agents, 3 instruction files, 1 prompt workflow, 5 skills, docs).
 
 ## Execution Model
 
