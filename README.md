@@ -1,42 +1,12 @@
 # Copilot Agent Team
 
-A reusable, generic agent team for [GitHub Copilot CLI](https://docs.github.com/en/copilot). Drop it into any repo to get a coordinated multi-agent development team out of the box.
+A reusable, generic agent team for GitHub Copilot. Drop it into any repo to get a coordinated multi-agent development team out of the box.
 
-## What's included
+## Prerequisites
 
-### Core Team (9 agents)
-
-| Agent | Role | Key responsibility |
-|-------|------|--------------------|
-| **coordinator** | Technical program manager | Orchestrates work, delegates to specialists, verifies output |
-| **developer** | Senior fullstack developer | Implements features, security review, end-to-end verification |
-| **designer** | UX/design engineer | UI markup, CSS/styling, accessibility, visual verification |
-| **tester** | Test engineer | E2E tests, regression protection, usability testing |
-| **reviewer** | Code reviewer | Pre-push, post-PR, and post-deploy review (3 modes) |
-| **product** | Product developer | Discovery, user interviews, acceptance criteria, plan critique |
-| **platform-engineer** | Platform/tooling specialist | CI/CD, shell scripting, Docker, GitHub Actions, versioning |
-| **clerk** | Administrative assistant | Documents, files, planning artifacts, journals |
-| **agent-creator** | Agent designer | Creates new agents when capability gaps are found |
-
-### Generic Instructions (3 files)
-
-- **clarification-policy** — Stop and ask when uncertain
-- **git** — Branch naming, conventional commits, PR conventions
-- **safety** — Auto-execute vs confirm policy for destructive operations
-
-### Prompt Workflows (1 file)
-
-- **fix-issue** — End-to-end: read issue → plan → branch → implement → PR
-
-### Optional Skills
-
-| Skill | Description |
-|-------|-------------|
-| **playwright-cli** | Browser automation for testing, screenshots, form filling |
-| **maskorama** | Opt-in animal persona system via structured interviews |
-| **dotnet-conventions** | C#/.NET coding standards and feature patterns |
-| **blazor-conventions** | Blazor SSR component patterns and best practices |
-| **xunit-testing** | xUnit test patterns with FakeItEasy/NSubstitute |
+- GitHub Copilot subscription (Business or Enterprise recommended for agent mode)
+- GitHub Copilot CLI or VS Code with Copilot extension
+- Supported runtimes: Cloud agents, CLI, VS Code
 
 ## Quick Start
 
@@ -49,89 +19,45 @@ A reusable, generic agent team for [GitHub Copilot CLI](https://docs.github.com/
 ### Option 2: Copy into an existing repo
 
 ```bash
-# Clone the template
-git clone https://github.com/YOUR_ORG/copilot-agent-team /tmp/agent-team
-
-# Copy into your project
-cp -r /tmp/agent-team/.github/agents your-repo/.github/agents
-cp -r /tmp/agent-team/.github/skills your-repo/.github/skills
-cp -r /tmp/agent-team/.github/agent-journals your-repo/.github/agent-journals
-
-# Don't forget to edit copilot-instructions.md for your project
-cp /tmp/agent-team/.github/copilot-instructions.md your-repo/.github/copilot-instructions.md
+git clone https://github.com/YOUR_ORG/copilot-agent-team ./copilot-agent-team-base
+cp -r ./copilot-agent-team-base/.github/agents your-repo/.github/agents
+cp -r ./copilot-agent-team-base/.github/skills your-repo/.github/skills
+cp -r ./copilot-agent-team-base/.github/agent-journals your-repo/.github/agent-journals
+cp ./copilot-agent-team-base/.github/copilot-instructions.md your-repo/.github/copilot-instructions.md
 ```
 
-### Option 3: Git submodule (for update tracking)
+> **Brownfield warning**: If your repo already has `.github/copilot-instructions.md`, don't blindly overwrite it — merge the Agent Team section manually.
 
-```bash
-# Add as submodule
-git submodule add https://github.com/YOUR_ORG/copilot-agent-team .github/agent-team-base
+## Verify It Works
 
-# Symlink or copy what you need
-cp -r .github/agent-team-base/.github/agents .github/agents
-```
+Ask the coordinator: *"Introduce the team and explain what each agent does."*
 
 ## Customization
 
-### Add project context
+- **Add project context**: Edit `.github/copilot-instructions.md` — the main file agents reference for your project's architecture, commands, and conventions.
+- **Add/remove skills**: Skills live in `.github/skills/`. Each skill has a `SKILL.md` with frontmatter and content.
+- **Add domain-specific agents**: Create `.agent.md` files in `.github/agents/`, or ask the agent-creator.
+- **Add stack-specific instructions**: Create instruction files in `.github/agents/instructions/`.
+- **Wire up MCP servers**: Document your MCP servers in `.github/copilot-instructions.md` so agents know what tools are available.
 
-Edit `.github/copilot-instructions.md` — this is the main file agents reference for your project's architecture, commands, conventions, and stack.
+## Team Roster
 
-### Add/remove skills
+| Agent | Role | Key responsibility |
+|-------|------|--------------------|
+| **coordinator** | Technical program manager | Orchestrates work, delegates, verifies output |
+| **developer** | Fullstack developer | Implements features, security review |
+| **designer** | UX/design engineer | UI markup, CSS, accessibility, visual verification |
+| **tester** | Test engineer | E2E tests, regression protection |
+| **reviewer** | Code reviewer | Pre-push, post-PR, post-deploy review (3 modes) |
+| **product** | Product | Discovery, user interviews, acceptance criteria |
+| **platform-engineer** | Platform/tooling specialist | CI/CD, scripting, Docker, GitHub Actions |
+| **clerk** | Administrative assistant | Documents, files, journals |
+| **agent-creator** | Agent designer | Creates new agents for capability gaps |
 
-Skills live in `.github/skills/`. Delete any you don't need. To add a skill, create a directory with a `SKILL.md` file:
-
-```
-.github/skills/your-skill/
-└── SKILL.md    # Frontmatter (name, description, applyTo) + content
-```
-
-### Activate Maskorama (animal personas)
-
-Give your agents personality! The maskorama skill uses a structured interview where each agent discovers their own animal identity:
-
-1. Ask the coordinator to "run maskorama for the team"
-2. The coordinator interviews each agent about their working style
-3. Each agent chooses their own animal, emoji, and speech rituals
-4. Persona cards are added to agent files
-
-See `.github/skills/maskorama/SKILL.md` for the full workflow and `.github/skills/maskorama/default-pack.md` for an example set.
-
-### Add domain-specific agents
-
-Create a new `.agent.md` file in `.github/agents/`:
-
-```markdown
----
-description: "Your agent description and trigger keywords"
-tools: [read, edit, search, execute, web, todo, agent]
----
-
-# Role
-...
-
-# Constraints
-...
-```
-
-The **agent-creator** agent can also build new agents for you — just ask the coordinator.
-
-### Add stack-specific instructions
-
-Create instruction files in `.github/agents/instructions/`:
-
-```markdown
----
-applyTo: "**/*.py"
----
-
-# Python Conventions
-...
-```
-
-### Wire up MCP servers
-
-Document your MCP servers in `.github/copilot-instructions.md` so agents know what tools are available. Then add the specific MCP tools to relevant agents' `tools` lists in their frontmatter.
+**How to work with the team:**
+- **Start with the coordinator** for multi-step tasks — it routes work to the right specialist
+- **Call agents directly** for focused tasks (e.g., `@developer` for implementation, `@tester` for writing tests)
+- **Check journals** at `.github/agent-journals/` for agent decision history and working notes
 
 ## Architecture
 
@@ -154,8 +80,18 @@ Document your MCP servers in `.github/copilot-instructions.md` so agents know wh
 **Key patterns:**
 - **Hub-and-spoke**: Coordinator delegates all work, never edits files directly
 - **Direct collaboration**: Designer ↔ Developer work together without coordinator in the loop during UI iterations
-- **Platform engineer relay**: All agents escalate CLI/CI/CD/infrastructure questions to the `platform-engineer` agent
+- **Platform engineer relay**: All agents escalate CLI/CI/CD/infrastructure questions to the platform-engineer
 - **Journals**: Each agent maintains a private journal at `.github/agent-journals/<name>.journal.md`
+
+## Stack Examples
+
+Stack-specific skills and instructions are in `examples/stacks/`. Currently available: .NET (Blazor, dotnet-conventions, xUnit).
+
+**Maskorama**: Opt-in animal persona system. See `.github/skills/maskorama/` for details.
+
+## Why no CI/CD?
+
+Agent files are markdown — there's nothing to lint, build, or test in CI.
 
 ## License
 
