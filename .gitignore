@@ -1,0 +1,21 @@
+# Agent artifacts
+.playwright-cli/
+.github/agent-journals/*.journal.md
+issue/
+
+# Dependencies
+node_modules/
+
+# Test output
+playwright-report/
+test-results/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

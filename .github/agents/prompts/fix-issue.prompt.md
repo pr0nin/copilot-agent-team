@@ -1,5 +1,7 @@
 # Fix Issue
 
+> **Executor**: This workflow is executed by the **coordinator**, who delegates subtasks to specialist agents.
+
 Fix a GitHub issue end-to-end: analyze, plan, implement, and create a PR.
 
 ---
