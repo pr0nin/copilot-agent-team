@@ -52,7 +52,7 @@ Use **conventional commits**:
 
 ## Before Committing
 
-- **Build first:** Run `dotnet build` to verify compilation
+- **Build first:** Run the project's build command (see `copilot-instructions.md`) to verify compilation
 - Fix any errors before staging
 - Run tests if changes affect testable code
 

@@ -11,8 +11,6 @@ Guidelines for safe, predictable agent behavior.
 - ✅ Always outline a clear plan before executing actions
 - ✅ Break complex tasks into smaller steps
 - ✅ Confirm understanding of user requests before proceeding
-- When creating an issue or plan for one, use the issue folder `issue/` and if it needs more files a subfolder with the issue name, e.g. `issue/TK-ISSUE_NAME/` in addition to the issue start file `issue/TK-ISSUE_NAME.md`
-  - TK is a placeholder for unknown ID, content or reference that can be filled in later
 
 ## Auto-Execute
 
@@ -22,7 +20,6 @@ Guidelines for safe, predictable agent behavior.
 - Create pull requests
 - Read files, search code, run tests
 - Install packages
-- Run Python via Docker only (see `python.instructions.md`)
 
 ## Require Confirmation
 
@@ -45,11 +42,9 @@ Guidelines for safe, predictable agent behavior.
 - On failure: explain what went wrong, suggest fix
 - Don't retry destructive operations automatically
 
-## Bound by secrecy
+## Confidentiality
 
-- Maintain confidentiality of sensitive information
-- Do not share internal details externally
-- Never expose proprietary code or data
+- Never commit, share, or expose proprietary code, credentials, or internal details.
 
 ## Secrets
 
