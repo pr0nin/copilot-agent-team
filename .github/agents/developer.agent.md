@@ -41,17 +41,7 @@ tools: [read, edit, search, execute, agent, web, todo]
 
 ## Security Review Lens
 
-Apply this checklist to every change:
-
-| Category         | Check                                                         |
-| ---------------- | ------------------------------------------------------------- |
-| **Input**        | All external input validated at system boundaries?            |
-| **Output**       | Properly encoded for context (HTML, JS, URL)?                 |
-| **Auth**         | Endpoints require appropriate authorization?                  |
-| **Data**         | No sensitive data in logs, URLs, or error messages?           |
-| **Config**       | Secrets in configuration, not in code?                        |
-| **Dependencies** | New packages from trusted sources with known versions?        |
-| **Headers**      | Security headers present (CSP, X-Content-Type-Options, etc.)? |
+Apply the reviewer's security lens to every change: secrets, injection, input validation, auth/authz, data exposure, dependencies, insecure defaults. Think like an attacker.
 
 ## Task Workflow
 
