@@ -60,13 +60,13 @@ Check the existing agent's filename stem against this alias table:
 | `product` | `pm`, `product-manager`, `product-owner`, `po`, `planner` |
 | `reviewer` | `auditor`, `checker`, `code-reviewer`, `linter`, `gate` |
 
-Match is case-insensitive. A hit on any alias → flag as name collision.
+Before comparing, normalize all names: lowercase, then replace underscores and spaces with hyphens (e.g. `platform_engineer` → `platform-engineer`). A hit on any alias → flag as name collision.
 
 **Layer 2 — Keyword overlap (proportional threshold):**
 
-Tokenize "Use when:" trigger phrases by splitting on commas, then trimming whitespace. Treat each comma-separated phrase as one keyword (e.g. "shell scripting" is one keyword, not two). Comparison is case-insensitive.
+Tokenize "Use when:" trigger phrases by splitting on commas, then trimming whitespace, and discarding any empty tokens (for example, from trailing commas or ellipses). Treat each comma-separated phrase as one keyword (e.g. "shell scripting" is one keyword, not two). Comparison is case-insensitive.
 
-Compute: `overlap_ratio = overlapping_keywords / min(keywords_A, keywords_B)`
+Compute: `overlap_ratio = overlapping_keywords / min(count_A, count_B)`, where `count_A` and `count_B` are the numbers of non-empty keywords for each agent after tokenization.
 
 Flag a **keyword collision** when `overlap_ratio ≥ 0.30` (i.e. ≥ 30% of the shorter keyword list overlaps).
 
@@ -114,7 +114,7 @@ Then ask the user:
 
 Collect all decisions before proceeding. Do not write any agent files until every collision is resolved.
 
-**Carry decisions forward into Step 9:**
+**Carry these decisions forward into the later step where you write or overwrite agent files:**
 - **A / D**: write the incoming (or merged) agent file, overwriting the existing one
 - **B**: skip writing that incoming agent entirely
 - **C**: write the incoming agent under the agreed new name; leave the existing file untouched
