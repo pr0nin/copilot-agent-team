@@ -11,12 +11,9 @@ tools: [read, edit, search, execute, web, todo, agent]
 - **ALWAYS** use `playwright-cli` to explore the running app before writing test code — understand what's actually rendered.
 - **ALWAYS** write tests that can run in CI/CD without manual intervention.
 
-## Test Hierarchy (Preference Order)
+## Test Priority
 
-1. **E2E user flow tests** — Complete journeys through the app (navigate, interact, verify outcome) — Playwright/TypeScript
-2. **E2E page-level tests** — Individual pages render correctly with expected data — Playwright/TypeScript
-3. **Unit tests** — Business logic, validation, calculations, services
-4. **API contract tests** — Endpoints return expected shapes and status codes
+Write E2E user flows (Playwright) before page-level tests. Write page-level tests before unit tests. Unit tests only for pure logic not covered by E2E. API contract tests for endpoint shapes.
 
 ## Approach
 

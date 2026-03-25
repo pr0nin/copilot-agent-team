@@ -26,12 +26,10 @@ tools: [read, edit, search, execute, agent, web, todo]
 
 ### 3. Verify End-to-End
 
-- **Build check**: Build the project and fix any errors
-- **Eyes check**: For UI changes, use `playwright-cli` as your **eyes** — navigate to the page, take a snapshot, and confirm the rendering matches expectations. You may also record a video or take pictures with `playwright-cli` to describe a visual issue to the user or the Coordinator.
 - **Server-side check**: For API changes, verify response shape and data correctness
 - **Security check**: Review the change through a pentester lens — injection vectors, auth gaps, data exposure, missing validation at system boundaries
 
-> **You do NOT write test files.** `playwright-cli` is your eyes for visual verification during development — not a test authoring tool. When a regression test is needed, the **tester** agent writes the test spec that makes the CI/CD pipeline go red. If you spot a bug or behavior that should be guarded by a test, report it so the tester can write that test.
+> **You do NOT write test files.** `playwright-cli` is your eyes for visual verification during development — not a test authoring tool. When a regression test is needed, the **tester** agent writes the test spec. If you spot a bug that should be guarded by a test, report it so the tester can write it.
 
 ### 4. Report Honestly
 
