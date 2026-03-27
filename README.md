@@ -4,7 +4,7 @@ A reusable, generic agent team for GitHub Copilot, distributed as a plugin. Drop
 
 ## Prerequisites
 
-- GitHub Copilot subscription (Business or Enterprise recommended for agent mode)
+- GitHub Copilot subscription (Pro probably required for agent mode)
 - GitHub Copilot CLI or VS Code with Copilot extension
 
 ## The Team
@@ -26,7 +26,7 @@ Start with the **coordinator** for multi-step tasks — it routes work to the ri
 ## Install as Copilot CLI Plugin
 
 ```bash
-copilot plugin install pr0nin/copilot-agent-team:plugins/copilot-agent-team
+copilot plugin install pr0nin/copilot-agent-team
 ```
 
 Plugin agents and skills are loaded from a local cache — no files are added to your repo.
