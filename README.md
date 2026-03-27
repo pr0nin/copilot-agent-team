@@ -32,6 +32,25 @@ After copying, run the **team-init** skill: *"Run team-init to set up the agent 
 
 > **Manual alternative**: If you prefer, edit `.github/copilot-instructions.md` by hand instead.
 
+### Option 3: Install as Copilot CLI Plugin
+
+```bash
+copilot plugin install https://github.com/pr0nin/copilot-agent-team
+```
+
+> Plugin agents and skills are loaded from a local cache — no files are added to your repo. Run `team-init` after install to configure `copilot-instructions.md` for your project.
+
+Manage the plugin:
+```bash
+copilot plugin list                          # See installed plugins
+copilot plugin update copilot-agent-team     # Pull latest version
+copilot plugin disable copilot-agent-team    # Temporarily disable
+copilot plugin enable copilot-agent-team     # Re-enable
+copilot plugin uninstall copilot-agent-team  # Remove
+```
+
+> **Customization**: Project-level agents (in `.github/agents/`) override plugin agents. To customize an agent, copy its `.agent.md` file into your repo and edit it there.
+
 ## Verify It Works
 
 Ask the coordinator: *"Introduce the team and explain what each agent does."*
