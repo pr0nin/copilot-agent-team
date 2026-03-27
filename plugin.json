@@ -1,0 +1,22 @@
+{
+  "name": "copilot-agent-team",
+  "description": "A reusable, generic agent team for GitHub Copilot. Drop it into any repo to get a coordinated multi-agent development team out of the box.",
+  "version": "0.0.1",
+  "author": {
+    "name": "pr0nin"
+  },
+  "repository": "https://github.com/pr0nin/copilot-agent-team",
+  "homepage": "https://github.com/pr0nin/copilot-agent-team",
+  "keywords": [
+    "agent-team",
+    "copilot",
+    "multi-agent",
+    "coordinator",
+    "developer",
+    "tester",
+    "designer",
+    "reviewer"
+  ],
+  "agents": ".github/agents/",
+  "skills": ".github/skills/"
+}
