@@ -16,7 +16,5 @@
     "tester",
     "designer",
     "reviewer"
-  ],
-  "agents": ".github/agents/",
-  "skills": ".github/skills/"
+  ]
 }
