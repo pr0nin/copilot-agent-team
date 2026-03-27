@@ -23,6 +23,22 @@ A reusable, generic agent team for GitHub Copilot, distributed as a plugin. Drop
 
 Start with the **coordinator** for multi-step tasks — it routes work to the right specialist. Call agents directly for focused tasks (e.g., `@developer` for implementation, `@tester` for writing tests).
 
+## Add Copilot Agent Team Marketplace
+
+```bash
+copilot plugin marketplace add pr0nin/copilot-agent-team
+```
+
+Manage the marketplace:
+```bash
+$ copilot plugin marketplace browse copilot-agent-team
+# Plugins in "copilot-agent-team":
+#   • agent-team - A coordinated multi-agent development team — 9 agents, 
+#       3 skills, shared instructions. Drop into any repo for instant team coverage.
+
+# Install with: copilot plugin install <plugin-name>@copilot-agent-team
+```
+
 ## Install as Copilot CLI Plugin
 
 ```bash
@@ -58,14 +74,14 @@ copilot plugin uninstall copilot-agent-team  # Remove
 1. Open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`)
 2. Run **Chat: Install Plugin From Source**
 3. Enter: `https://github.com/pr0nin/copilot-agent-team`
-4. If prompted, specify plugin path: `plugins/copilot-agent-team`
+4. If prompted, specify plugin path: `plugins/agent-team`
 
 No files are added to your repo. Manage the plugin from the Extensions view → **Agent Plugins - Installed**: enable, disable, or uninstall per-workspace or globally.
 
 If VS Code does not support subpath plugin resolution, clone the repo and install from the CLI instead:
 
 ```bash
-copilot plugin install ./plugins/copilot-agent-team
+copilot plugin install ./plugins/agent-team
 ```
 
 > **⚡ Important — run `team-init` after install:**
@@ -82,20 +98,20 @@ copilot plugin install ./plugins/copilot-agent-team
 
 This repo has a dual layout:
 
-- **`plugins/copilot-agent-team/`** — the distributable plugin. This is what consumers install. Contains the agent definitions, skills, examples, and `plugin.json` manifest.
+- **`plugins/agent-team/`** — the distributable plugin. This is what consumers install. Contains the agent definitions, skills, examples, and `plugin.json` manifest.
 - **`.github/agents/` and `.github/skills/`** — the same agent team, used for developing this repo itself (dogfooding). Changes here do **not** affect the distributed plugin.
 
-When developing, edit files in `plugins/copilot-agent-team/` and test locally:
+When developing, edit files in `plugins/agent-team/` and test locally:
 
 ```bash
 # Install the plugin locally for testing
-copilot plugin install ./plugins/copilot-agent-team
+copilot plugin install ./plugins/agent-team
 
 # Reinstall after making plugin changes
-copilot plugin install ./plugins/copilot-agent-team
+copilot plugin install ./plugins/agent-team
 
 # Uninstall when done testing
-copilot plugin uninstall copilot-agent-team
+copilot plugin uninstall agent-team
 ```
 
 ### Conventions
