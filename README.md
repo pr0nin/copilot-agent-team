@@ -63,9 +63,9 @@ copilot plugin uninstall copilot-agent-team  # Remove
 ### Next Steps
 
 - **Verify it works**: Ask the coordinator *"Introduce the team and explain what each agent does."*
+- **Check skill readiness**: Ask the coordinator *"Generate a skill compatibility report for this workspace. List bundled skills, external dependencies, per-agent status (installed/missing/optional), evidence, and blockers."*
 - **Customize agents**: Project-level agents in `.github/agents/` override plugin agents. Copy any `.agent.md` file into your repo and edit it there.
 - **Add skills**: Skills live in `.github/skills/`. Each skill has a `SKILL.md` with frontmatter and content.
-- **Stack-specific examples**: See [`examples/stacks/`](examples/stacks/) for stack-specific skills and instructions (e.g., .NET, Blazor, xUnit).
 
 ## Install as VS Code Plugin
 
@@ -90,9 +90,9 @@ copilot plugin install ./plugins/agent-team
 ### Next Steps
 
 - **Verify it works**: Ask the coordinator *"Introduce the team and explain what each agent does."*
+- **Check skill readiness**: Ask the coordinator *"Generate a skill compatibility report for this workspace. List bundled skills, external dependencies, per-agent status (installed/missing/optional), evidence, and blockers."*
 - **Customize agents**: Project-level agents in `.github/agents/` override plugin agents. Copy any `.agent.md` file into your repo and edit it there.
 - **Add skills**: Skills live in `.github/skills/`. Each skill has a `SKILL.md` with frontmatter and content.
-- **Stack-specific examples**: See [`examples/stacks/`](examples/stacks/) for stack-specific skills and instructions (e.g., .NET, Blazor, xUnit).
 
 ## Developing the Plugin
 

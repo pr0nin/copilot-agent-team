@@ -98,3 +98,5 @@ This project uses a multi-agent team. See `.github/agents/` for individual agent
 **Core team**: coordinator, clerk, platform-engineer, developer, tester, designer, agent-creator, product, reviewer
 
 **Coordination model**: Hub-and-spoke with the coordinator at the center. The coordinator delegates work, verifies output, and synthesizes results. Agents collaborate directly when appropriate (e.g., designer ↔ developer for UI work).
+
+**Skill readiness check**: Ask the coordinator *"Generate a skill compatibility report for this workspace. List bundled skills, external dependencies, per-agent status (installed/missing/optional), evidence, and blockers."*
