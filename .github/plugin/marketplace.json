@@ -1,0 +1,18 @@
+{
+  "name": "copilot-agent-team",
+  "owner": {
+    "name": "pr0nin"
+  },
+  "metadata": {
+    "description": "Plugin marketplace for the copilot-agent-team project. Install the core agent team or add niche plugins side-by-side.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "copilot-agent-team",
+      "source": "./plugins/copilot-agent-team",
+      "description": "A coordinated multi-agent development team — 9 agents, 3 skills, shared instructions. Drop into any repo for instant team coverage.",
+      "version": "0.0.1"
+    }
+  ]
+}

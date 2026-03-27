@@ -13,20 +13,24 @@ A reusable, generic agent team for GitHub Copilot. Drop it into any repo to get 
 ### Option 1: Use as GitHub Template
 
 1. Click **"Use this template"** on GitHub to create a new repo
-2. Run the **team-init** skill to auto-configure: ask Copilot *"Run team-init to set up the agent team for this repo"*
-3. Delete any skills you don't need from `.github/skills/`
+2. Choose your agent management approach:
+   - **Plugin-managed** (recommended): Delete `.github/agents/` and `.github/skills/`, then install the plugin: `copilot plugin install ./plugins/copilot-agent-team` — agents auto-update with `copilot plugin update`
+   - **Local**: Keep `.github/agents/` and `.github/skills/` as-is for full local control — you manage updates manually
+3. Run the **team-init** skill to auto-configure: ask Copilot *"Run team-init to set up the agent team for this repo"*
 
 ### Option 2: Copy into an existing repo
 
 ```bash
 git clone https://github.com/YOUR_ORG/copilot-agent-team ./copilot-agent-team-base
-cp -r ./copilot-agent-team-base/.github/agents your-repo/.github/agents
-cp -r ./copilot-agent-team-base/.github/skills your-repo/.github/skills
-cp -r ./copilot-agent-team-base/.github/agent-journals your-repo/.github/agent-journals
-cp ./copilot-agent-team-base/.github/copilot-instructions.md your-repo/.github/copilot-instructions.md
+mkdir -p your-repo/.github/agents your-repo/.github/skills
+cp -r ./copilot-agent-team-base/plugins/copilot-agent-team/agents/. your-repo/.github/agents/
+cp -r ./copilot-agent-team-base/plugins/copilot-agent-team/skills/. your-repo/.github/skills/
+mkdir -p your-repo/.github/agent-journals
+echo '.github/agent-journals/' >> your-repo/.gitignore
+cp ./copilot-agent-team-base/plugins/copilot-agent-team/examples/copilot-instructions-example.md your-repo/.github/copilot-instructions.md
 ```
 
-> **Brownfield warning**: If your repo already has `.github/copilot-instructions.md`, don't blindly overwrite it — merge the Agent Team section manually.
+> **Brownfield warning**: If your repo already has `.github/copilot-instructions.md`, don't overwrite it — run `team-init` to merge the Agent Team sections automatically.
 
 After copying, run the **team-init** skill: *"Run team-init to set up the agent team for this repo"*. It will scan your project and fill in `copilot-instructions.md` automatically — detecting your language, framework, build commands, architecture, and conventions.
 
@@ -35,7 +39,7 @@ After copying, run the **team-init** skill: *"Run team-init to set up the agent 
 ### Option 3: Install as Copilot CLI Plugin
 
 ```bash
-copilot plugin install https://github.com/pr0nin/copilot-agent-team
+copilot plugin install pr0nin/copilot-agent-team:plugins/copilot-agent-team
 ```
 
 > Plugin agents and skills are loaded from a local cache — no files are added to your repo. Run `team-init` after install to configure `copilot-instructions.md` for your project.
@@ -56,8 +60,9 @@ copilot plugin uninstall copilot-agent-team  # Remove
 1. Open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`)
 2. Run **Chat: Install Plugin From Source**
 3. Enter: `https://github.com/pr0nin/copilot-agent-team`
+4. If prompted, specify plugin path: `plugins/copilot-agent-team`
 
-> VS Code agent plugins are currently in **Preview**. No files are added to your repo. Run `team-init` after install to configure `copilot-instructions.md` for your project.
+> **Prerequisites**: VS Code 1.110+ with `chat.plugins.enabled` set to `true` in settings. Agent plugins are currently in **Preview**. No files are added to your repo. If VS Code does not support subpath plugin resolution, clone the repo and use `copilot plugin install ./plugins/copilot-agent-team` from the CLI instead. Run `team-init` after install to configure `copilot-instructions.md` for your project.
 
 Manage the plugin from the Extensions view → **Agent Plugins - Installed**: enable, disable, or uninstall per-workspace or globally.
 
@@ -120,7 +125,18 @@ Ask the coordinator: *"Introduce the team and explain what each agent does."*
 
 Stack-specific skills and instructions are in `examples/stacks/`. Currently available: .NET (Blazor, dotnet-conventions, xUnit).
 
-**Maskorama**: Opt-in animal persona system. See `.github/skills/maskorama/` for details.
+**Maskorama**: Opt-in animal persona system. Run the maskorama skill to activate: ask Copilot *"Run maskorama to assign animal personas to the team."*
+
+## Plugin Marketplace
+
+This repo also serves as a plugin marketplace. Add it as a marketplace source to browse and install available plugins:
+
+```bash
+copilot plugin marketplace add pr0nin/copilot-agent-team
+copilot plugin marketplace browse copilot-agent-team
+```
+
+Future niche plugins (specialized agents, domain-specific skills) will be listed here for side-by-side installation with the core team.
 
 ## Why no CI/CD?
 
