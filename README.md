@@ -111,4 +111,4 @@ See [docs/architecture.md](docs/architecture.md) for the coordination model and 
 
 ## License
 
-[Choose your license]
+MIT License. See [LICENSE](LICENSE) for details.
