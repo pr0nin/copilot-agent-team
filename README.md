@@ -51,7 +51,7 @@ copilot plugin enable copilot-agent-team     # Re-enable
 copilot plugin uninstall copilot-agent-team  # Remove
 ```
 
-> **Customization**: Project-level agents (in `.github/agents/`) override plugin agents. To customize an agent, copy its `.agent.md` file into your repo and edit it there.
+> **Customization**: Project-level agents (in `.github/agents/`) override plugin agents. To customize a single agent, copy its `.agent.md` file into your repo and edit it there. To export the entire team for full local ownership, run the `team-export` skill: *"Run team-export to copy all agent files into my repo."*
 
 ### Option 4: Install as VS Code Plugin (Preview)
 
