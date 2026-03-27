@@ -22,11 +22,9 @@ A reusable, generic agent team for GitHub Copilot. Drop it into any repo to get 
 
 ```bash
 git clone https://github.com/YOUR_ORG/copilot-agent-team ./copilot-agent-team-base
-mkdir -p your-repo/.github/agents your-repo/.github/skills
-cp -r ./copilot-agent-team-base/plugins/copilot-agent-team/agents/. your-repo/.github/agents/
-cp -r ./copilot-agent-team-base/plugins/copilot-agent-team/skills/. your-repo/.github/skills/
+cp -r ./copilot-agent-team-base/plugins/copilot-agent-team/agents your-repo/.github/agents
+cp -r ./copilot-agent-team-base/plugins/copilot-agent-team/skills your-repo/.github/skills
 mkdir -p your-repo/.github/agent-journals
-echo '.github/agent-journals/' >> your-repo/.gitignore
 cp ./copilot-agent-team-base/plugins/copilot-agent-team/examples/copilot-instructions-example.md your-repo/.github/copilot-instructions.md
 ```
 
@@ -53,7 +51,7 @@ copilot plugin enable copilot-agent-team     # Re-enable
 copilot plugin uninstall copilot-agent-team  # Remove
 ```
 
-> **Customization**: Project-level agents (in `.github/agents/`) override plugin agents. To customize an agent, copy its `.agent.md` file into your repo and edit it there.
+> **Customization**: Project-level agents (in `.github/agents/`) override plugin agents. To customize a single agent, copy its `.agent.md` file into your repo and edit it there. To export the entire team for full local ownership, run the `team-export` skill: *"Run team-export to copy all agent files into my repo."*
 
 ### Option 4: Install as VS Code Plugin (Preview)
 
@@ -62,7 +60,7 @@ copilot plugin uninstall copilot-agent-team  # Remove
 3. Enter: `https://github.com/pr0nin/copilot-agent-team`
 4. If prompted, specify plugin path: `plugins/copilot-agent-team`
 
-> **Prerequisites**: VS Code 1.110+ with `chat.plugins.enabled` set to `true` in settings. Agent plugins are currently in **Preview**. No files are added to your repo. If VS Code does not support subpath plugin resolution, clone the repo and use `copilot plugin install ./plugins/copilot-agent-team` from the CLI instead. Run `team-init` after install to configure `copilot-instructions.md` for your project.
+> VS Code agent plugins are currently in **Preview**. No files are added to your repo. If VS Code does not support subpath plugin resolution, clone the repo and use `copilot plugin install ./plugins/copilot-agent-team` from the CLI instead. Run `team-init` after install to configure `copilot-instructions.md` for your project.
 
 Manage the plugin from the Extensions view → **Agent Plugins - Installed**: enable, disable, or uninstall per-workspace or globally.
 
@@ -125,7 +123,7 @@ Ask the coordinator: *"Introduce the team and explain what each agent does."*
 
 Stack-specific skills and instructions are in `examples/stacks/`. Currently available: .NET (Blazor, dotnet-conventions, xUnit).
 
-**Maskorama**: Opt-in animal persona system. Run the maskorama skill to activate: ask Copilot *"Run maskorama to assign animal personas to the team."*
+**Maskorama**: Opt-in animal persona system. See `.github/skills/maskorama/` for details.
 
 ## Plugin Marketplace
 
