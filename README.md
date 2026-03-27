@@ -51,6 +51,16 @@ copilot plugin uninstall copilot-agent-team  # Remove
 
 > **Customization**: Project-level agents (in `.github/agents/`) override plugin agents. To customize an agent, copy its `.agent.md` file into your repo and edit it there.
 
+### Option 4: Install as VS Code Plugin (Preview)
+
+1. Open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`)
+2. Run **Chat: Install Plugin From Source**
+3. Enter: `https://github.com/pr0nin/copilot-agent-team`
+
+> VS Code agent plugins are currently in **Preview**. No files are added to your repo. Run `team-init` after install to configure `copilot-instructions.md` for your project.
+
+Manage the plugin from the Extensions view → **Agent Plugins - Installed**: enable, disable, or uninstall per-workspace or globally.
+
 ## Verify It Works
 
 Ask the coordinator: *"Introduce the team and explain what each agent does."*
