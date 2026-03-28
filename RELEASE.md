@@ -37,7 +37,33 @@ copilot plugin install ./plugins/agent-team
   - `.plugin/marketplace.json`
 
 6. Review and merge the bump PR.
-7. Open a tag matching the plugin version (format: `vX.Y.Z`).
+7. Create and push a tag matching the plugin version (format: `vX.Y.Z`).
+   - The tag **must** match the version in `.plugin/plugin.json` (e.g., if the version is `0.1.0`, the tag should be `v0.1.0`).
+   - You can do this manually:
+
+     ```bash
+     VERSION=$(jq -r '.version' .plugin/plugin.json)
+     git tag "v$VERSION"
+     git push origin "v$VERSION"
+     ```
+   - Or use the GitHub Actions workflow: **Tag Plugin Version** (`.github/workflows/tag-plugin-version.yml`)
+     - **Prerequisites**: The workflow uses a Personal Access Token (PAT) stored in the `TAG_PUSH_PAT` repository secret to push tags. Set it up once:
+       1. **Create a fine-grained Personal Access Token**:
+          - Go to [GitHub Settings → Personal access tokens → Fine-grained tokens](https://github.com/settings/tokens?type=beta)
+          - Click **Generate new token**
+          - Set **Repository access**: Select `copilot-agent-team` only
+          - Set **Permissions**: Under "Repository permissions", select `Contents` and set to **Read and Write**
+          - Click **Generate token** and copy the token
+       2. **Store the token as a repository secret**:
+          - In this repo, go to **Settings → Secrets and variables → Actions**
+          - Click **New repository secret**
+          - Set **Name**: `TAG_PUSH_PAT`
+          - Paste your token in **Secret** and click **Add secret**
+       3. For more details, see [GitHub's Personal Access Token documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+     - Trigger it from the Actions tab after merging the version bump PR.
+     - The workflow will create and push the tag if it does not already exist.
+     - If the tag already exists, the workflow will no-op (best practice: do not fail the workflow, just log and exit).
+   - Double-check that the tag appears on GitHub and matches the intended version.
 8. The release workflow (`.github/workflows/release-on-tag.yml`) validates tag/version parity and publishes release notes.
 9. Update docs if behavior changed (`README.md`, examples, skills docs).
 

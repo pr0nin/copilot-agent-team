@@ -1,0 +1,72 @@
+# Creates and pushes a git tag matching the version in .plugin/plugin.json (format: vX.Y.Z).
+# Must be triggered manually. Requires a personal access token (PAT) with repo write access set as TAG_PUSH_PAT in repo secrets.
+
+name: Tag Plugin Version
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: tag-plugin-version
+  cancel-in-progress: false
+
+jobs:
+  tag-version:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Get plugin version
+        id: version
+        run: |
+          VERSION=$(jq -r '.version' .plugin/plugin.json)
+          
+          # Validate version exists and is not null
+          if [[ -z "$VERSION" || "$VERSION" == "null" ]]; then
+            echo "Error: version field not found or is null in .plugin/plugin.json" >&2
+            exit 1
+          fi
+          
+          # Validate semver format (X.Y.Z)
+          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Error: version '$VERSION' does not match semver format (X.Y.Z)" >&2
+            exit 1
+          fi
+          
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Check if tag exists
+        id: tag_exists
+        run: |
+          TAG="v${{ steps.version.outputs.version }}"
+          if git rev-parse "refs/tags/$TAG" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create tag
+        if: steps.tag_exists.outputs.exists != 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag "v${{ steps.version.outputs.version }}"
+
+      - name: Push tag
+        if: steps.tag_exists.outputs.exists != 'true'
+        env:
+          TAG_PUSH_PAT: ${{ secrets.TAG_PUSH_PAT }}
+        run: |
+          git remote set-url origin https://x-access-token:${TAG_PUSH_PAT}@github.com/${{ github.repository }}.git
+          git push origin "v${{ steps.version.outputs.version }}"
+
+      - name: Tag already exists
+        if: steps.tag_exists.outputs.exists == 'true'
+        run: echo "Tag v${{ steps.version.outputs.version }} already exists. No action taken."
