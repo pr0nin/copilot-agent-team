@@ -12,7 +12,7 @@
       "name": "agent-team",
       "source": "./plugins/agent-team",
       "description": "A coordinated multi-agent development team — 9 agents, 3 skills, shared instructions. Drop into any repo for instant team coverage.",
-      "version": "0.1.0"
+      "version": "0.1.1"
     }
   ]
 }
