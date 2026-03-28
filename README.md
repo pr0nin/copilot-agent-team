@@ -98,8 +98,20 @@ copilot plugin install ./plugins/agent-team
 
 This repo has a dual layout:
 
-- **`plugins/agent-team/`** — the distributable plugin. This is what consumers install. Contains the agent definitions, skills, examples, and `plugin.json` manifest.
-- **`.github/agents/` and `.github/skills/`** — the same agent team, used for developing this repo itself (dogfooding). Changes here do **not** affect the distributed plugin.
+- **`plugins/agent-team/`** — the **source of truth** for all distributable agents and skills.
+- **`.github/agents/` and `.github/skills/`** — generated mirrors for dogfooding this repo.
+
+### Source-of-Truth Policy
+
+- Edit agent/skill content in `plugins/agent-team/` only.
+- Do not manually edit mirrored files in `.github/agents/` or `.github/skills/`.
+- After plugin changes, regenerate mirrors:
+
+```bash
+bash scripts/sync-plugin-mirrors.sh
+```
+
+- CI enforces this with `.github/workflows/mirror-drift-check.yml` and fails if mirrors drift.
 
 When developing, edit files in `plugins/agent-team/` and test locally:
 
@@ -109,6 +121,9 @@ copilot plugin install ./plugins/agent-team
 
 # Reinstall after making plugin changes
 copilot plugin install ./plugins/agent-team
+
+# Sync dogfooding mirrors from plugin source of truth
+bash scripts/sync-plugin-mirrors.sh
 
 # Uninstall when done testing
 copilot plugin uninstall agent-team
@@ -122,6 +137,12 @@ copilot plugin uninstall agent-team
 - **Agent files**: `<name>.agent.md`
 - **Instruction files**: `<name>.instructions.md`
 - **Skills**: kebab-case directory with `SKILL.md` inside
+
+### Versioning and Release
+
+- Version bumps are automated with GitVersion via `.github/workflows/version-bump-gitversion.yml`.
+- Releases are published from matching tags via `.github/workflows/release-on-tag.yml`.
+- See `RELEASE.md` for the full release checklist.
 
 See [docs/architecture.md](docs/architecture.md) for the coordination model and design patterns.
 

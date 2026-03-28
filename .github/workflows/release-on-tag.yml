@@ -1,0 +1,49 @@
+name: Release on Tag
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate mirror parity
+        run: |
+          bash scripts/sync-plugin-mirrors.sh
+          git diff --exit-code -- .github/agents .github/skills
+
+      - name: Read plugin version
+        id: version
+        run: |
+          VERSION=$(jq -r '.version' .plugin/plugin.json)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Validate tag matches plugin version
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          if [[ "$TAG_VERSION" != "${{ steps.version.outputs.version }}" ]]; then
+            echo "Tag version ($TAG_VERSION) does not match .plugin/plugin.json version (${{ steps.version.outputs.version }})."
+            exit 1
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          name: "agent-team v${{ steps.version.outputs.version }}"
+          body: |
+            Plugin version: `${{ steps.version.outputs.version }}`
+
+            Updated manifests:
+            - `.plugin/plugin.json`
+            - `.plugin/marketplace.json`

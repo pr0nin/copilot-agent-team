@@ -1,0 +1,25 @@
+name: Mirror Drift Check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  mirror-drift:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Sync mirrors from plugin source
+        run: bash scripts/sync-plugin-mirrors.sh
+
+      - name: Fail if mirrors drifted
+        run: |
+          if ! git diff --exit-code -- .github/agents .github/skills; then
+            echo "Detected drift between plugins/agent-team and .github mirrors."
+            echo "Run: bash scripts/sync-plugin-mirrors.sh"
+            exit 1
+          fi
