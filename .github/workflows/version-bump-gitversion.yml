@@ -31,7 +31,7 @@ jobs:
         id: noop
         run: |
           CURRENT_VERSION="$(jq -r '.version' .plugin/plugin.json)"
-          NEXT_VERSION="${{ steps.gitversion.outputs.majorMinorPatch }}"
+          NEXT_VERSION="${{ steps.gitversion.outputs.MajorMinorPatch }}"
 
           echo "Current version: $CURRENT_VERSION"
           echo "Computed version: $NEXT_VERSION"
@@ -46,7 +46,7 @@ jobs:
       - name: Apply computed version
         if: steps.noop.outputs.changed == 'true'
         run: |
-          VERSION="${{ steps.gitversion.outputs.majorMinorPatch }}"
+          VERSION="${{ steps.gitversion.outputs.MajorMinorPatch }}"
           bash scripts/set-plugin-version.sh "$VERSION"
 
       - name: Sync mirrors
@@ -57,13 +57,13 @@ jobs:
         if: steps.noop.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
-          branch: chore/version-bump-${{ steps.gitversion.outputs.majorMinorPatch }}
-          commit-message: "chore: bump plugin version to ${{ steps.gitversion.outputs.majorMinorPatch }}"
-          title: "chore: bump plugin version to ${{ steps.gitversion.outputs.majorMinorPatch }}"
+          branch: chore/version-bump-${{ steps.gitversion.outputs.MajorMinorPatch }}
+          commit-message: "chore: bump plugin version to ${{ steps.gitversion.outputs.MajorMinorPatch }}"
+          title: "chore: bump plugin version to ${{ steps.gitversion.outputs.MajorMinorPatch }}"
           body: |
             Automated version bump generated with GitVersion.
 
-            - Version: `${{ steps.gitversion.outputs.majorMinorPatch }}`
+            - Version: `${{ steps.gitversion.outputs.MajorMinorPatch }}`
             - Updated: `.plugin/plugin.json`, `.plugin/marketplace.json`
             - Synced mirrors: `.github/agents`, `.github/skills`
           labels: |
