@@ -33,8 +33,8 @@ copilot plugin install ./plugins/agent-team
 
 - GitHub Actions: **Version Bump (GitVersion)** (`.github/workflows/version-bump-gitversion.yml`)
 - This computes version from Git history and opens a PR that updates:
-	- `.plugin/plugin.json`
-	- `.plugin/marketplace.json`
+  - `.plugin/plugin.json`
+  - `.plugin/marketplace.json`
 
 6. Review and merge the bump PR.
 7. Open a tag matching the plugin version (format: `vX.Y.Z`).

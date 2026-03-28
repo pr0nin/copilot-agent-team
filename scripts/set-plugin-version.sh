@@ -22,8 +22,17 @@ if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]; then
   exit 1
 fi
 
-tmp_plugin="$(mktemp)"
-tmp_marketplace="$(mktemp)"
+# Create temp files next to the targets so mv is atomic (same filesystem)
+tmp_plugin="$(mktemp "${PLUGIN_FILE}.XXXXXX")"
+tmp_marketplace="$(mktemp "${MARKETPLACE_FILE}.XXXXXX")"
+trap 'rm -f "$tmp_plugin" "$tmp_marketplace"' EXIT
+
+# Validate exactly one marketplace entry matches before writing
+agent_team_count="$(jq --arg name "agent-team" '[.plugins[] | select(.name == $name)] | length' "$MARKETPLACE_FILE")"
+if [[ "$agent_team_count" -ne 1 ]]; then
+  echo "Expected exactly one marketplace plugin with name \"agent-team\", found $agent_team_count" >&2
+  exit 1
+fi
 
 jq --arg version "$VERSION" '.version = $version' "$PLUGIN_FILE" > "$tmp_plugin"
 mv "$tmp_plugin" "$PLUGIN_FILE"
