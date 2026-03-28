@@ -57,6 +57,7 @@ jobs:
         if: steps.noop.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
+          token: ${{ secrets.FINE_GRAINED_PAT }}
           branch: chore/version-bump-${{ steps.gitversion.outputs.MajorMinorPatch }}
           commit-message: "chore: bump plugin version to ${{ steps.gitversion.outputs.MajorMinorPatch }}"
           title: "chore: bump plugin version to ${{ steps.gitversion.outputs.MajorMinorPatch }}"
