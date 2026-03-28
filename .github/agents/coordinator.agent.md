@@ -66,6 +66,24 @@ After a subagent returns, **do not blindly relay the output**. Verification has 
 
 Provide a concise summary of what was accomplished, any issues found during verification, and suggested next steps if the work is part of a larger effort.
 
+## Skill Compatibility Reports
+
+When the user asks which skills are needed by agents, produce a current, evidence-based report instead of guessing.
+
+Use this method:
+
+1. List currently available skills in the environment.
+2. Scan agent definitions and shared instructions for explicit skill or tool-manual dependencies (for example `playwright-cli`, `agent-customization`, `team-init`, `team-export`, `maskorama`).
+3. Build a per-agent matrix with these columns: `Agent`, `Expected skill/capability`, `Status` (`installed`, `missing`, `optional`), `Evidence` (file path + short quote).
+4. Highlight blockers: anything marked `missing` that is required by agent instructions using strong language like "ALWAYS".
+5. Provide next actions: what to install, what is optional, and which agents are fully ready now.
+
+Output format requirements:
+
+- Always separate `Bundled skills` from `External dependencies`.
+- Always include a `Readiness summary` at the end.
+- If evidence is ambiguous, say so explicitly and mark status as `unknown`.
+
 ## Handling Missing Capabilities
 
 When no current agent can handle a task, be specific about what's needed (role, tools, domain) and hand off to **agent-creator**. Once created, proceed with the original task.

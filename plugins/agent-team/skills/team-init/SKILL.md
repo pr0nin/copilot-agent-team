@@ -14,6 +14,23 @@ Analyze the host repo and fill in `.github/copilot-instructions.md` placeholders
 
 ## Steps
 
+### 0. Detect installation context
+
+Before beginning, determine how the agent team was installed:
+
+**Check**: Do `.agent.md` files exist in the project's `.github/agents/` directory?
+
+**Plugin context** (no local agent files — team runs from a plugin):
+- Inform the user: *"Agents are provided by the copilot-agent-team plugin — no agent files will be copied into your repo."*
+- Skip **Check for agent collisions** — plugin agents are read-only
+- In **Fill or merge template**, only create/update `.github/copilot-instructions.md` and `.github/agent-journals/` directory
+- Do NOT copy agent files, instruction files, or prompt files into the project
+- Remind the user: *"To customize an agent, copy its `.agent.md` from the plugin into `.github/agents/` — local agents override plugin agents."*
+- Also tell the user about the `team-export` skill and when to use it: full local ownership, broad customization across many agents, stricter audit/review workflows, or exporting before uninstalling the plugin.
+
+**Local context** (agent files exist in `.github/agents/`):
+- Proceed with the full flow including collision detection and file management
+
 ### 1. Detect project type
 - Scan repo root for: `package.json`, `*.csproj`/`*.sln`, `pyproject.toml`/`setup.py`, `go.mod`, `Cargo.toml`, `pom.xml`/`build.gradle`, `Gemfile`, `composer.json`, `mix.exs`
 - Note monorepo indicators: `workspaces`, `lerna.json`, `nx.json`, `turbo.json`
@@ -26,6 +43,12 @@ Before writing any files, scan the host repo for agents that may conflict with t
 - Search for `*.agent.md` files anywhere in the repo (common paths: `.github/agents/`, `.vscode/agents/`, `.copilot/agents/`)
 - Also check `AGENTS.md` / `agents.md` for inline agent definitions
 - If nothing is found, skip the rest of this step silently
+
+**Source-control context (required before collision decisions):**
+- If source control is available (for example Git), inspect repository changes before resolving collisions.
+- For any candidate colliding file, review source-control status and diff first (new, modified, deleted, renamed).
+- Use source-control diff context as a primary input when proposing keep/merge/replace outcomes.
+- If source control is unavailable, continue with content-only comparison and state that limitation explicitly.
 
 **Parsing `AGENTS.md`:**
 AGENTS.md files have no standard format. Try these extraction strategies in order:
@@ -99,6 +122,8 @@ command line, shell scripting, bash, zsh, PowerShell, terminal …
 Overlapping keywords: command line, shell scripting, bash, zsh, PowerShell, terminal
 ```
 
+When available, add a **Source-control diff context** block to the collision card summarizing what changed in the colliding file and why that affects the recommendation.
+
 Then ask the user:
 
 > How would you like to resolve this?
@@ -149,6 +174,12 @@ Collect all decisions before proceeding. Do not write any agent files until ever
 
 ### 8. Fill or merge template
 
+**Plugin context**: Only create/update `.github/copilot-instructions.md` with discovered values and ensure `.github/agent-journals/` directory exists. Do not copy any agent, instruction, or prompt files. Continue with **Ask user**.
+
+**If `.github/copilot-instructions.md` does not exist**:
+- Create it from plugin template `templates/copilot-instructions.md`.
+- Then continue with Greenfield/Brownfield logic below.
+
 **Greenfield** (template placeholders present):
 - Replace every `[placeholder]` in `.github/copilot-instructions.md` with discovered values
 - Remove unfilled placeholder rows; preserve **Agent Team** and **MCP Servers** sections
@@ -169,3 +200,8 @@ Collect all decisions before proceeding. Do not write any agent files until ever
 ### 10. Verify
 - Show the filled-in file and ask for confirmation before writing
 - Apply requested changes and re-confirm
+
+### 11. Handoff to team-export (informational)
+- After completion, remind the user that `team-export` is available if they want to locally own all team files.
+- Explain why they might use it: repository-local customization at scale, auditable commits for agent changes, and easier long-term divergence from plugin defaults.
+- Do not run `team-export` automatically; only run it if the user asks.
