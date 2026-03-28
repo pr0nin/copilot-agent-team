@@ -37,7 +37,20 @@ copilot plugin install ./plugins/agent-team
   - `.plugin/marketplace.json`
 
 6. Review and merge the bump PR.
-7. Open a tag matching the plugin version (format: `vX.Y.Z`).
+7. Create and push a tag matching the plugin version (format: `vX.Y.Z`).
+   - The tag **must** match the version in `.plugin/plugin.json` (e.g., if the version is `0.1.0`, the tag should be `v0.1.0`).
+   - You can do this manually:
+
+     ```bash
+     VERSION=$(jq -r '.version' .plugin/plugin.json)
+     git tag "v$VERSION"
+     git push origin "v$VERSION"
+     ```
+   - Or use the GitHub Actions workflow: **Tag Plugin Version** (`.github/workflows/tag-plugin-version.yml`)
+     - Trigger it from the Actions tab after merging the version bump PR.
+     - The workflow will create and push the tag if it does not already exist.
+     - If the tag already exists, the workflow will no-op (best practice: do not fail the workflow, just log and exit).
+   - Double-check that the tag appears on GitHub and matches the intended version.
 8. The release workflow (`.github/workflows/release-on-tag.yml`) validates tag/version parity and publishes release notes.
 9. Update docs if behavior changed (`README.md`, examples, skills docs).
 
