@@ -25,6 +25,10 @@
 - **Platform engineer relay**: All agents escalate CLI/CI/CD/infrastructure questions to the platform-engineer
 - **Journals**: Each agent maintains a private journal at `.github/agent-journals/<name>.journal.md`
 
-## Why No CI/CD?
+## CI Scope
 
-Agent files are markdown — there's nothing to lint, build, or test in CI.
+The repository uses lightweight CI for repository integrity checks:
+
+- Mirror drift detection between `plugins/agent-team/` (source of truth) and `.github/agents` + `.github/skills` (dogfooding mirrors)
+
+There is no traditional compile/build pipeline because the primary artifacts are markdown agent and skill definitions.
